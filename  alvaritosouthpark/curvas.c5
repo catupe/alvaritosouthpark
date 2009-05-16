@@ -14,25 +14,35 @@ typedef struct Cuadrante {
 
 void dibujarKyle(Port_List pl){
 	Cuadrante cabeza;	
-	Port_List pl_cabeza, pl_sombrero, pl_sombrero1, pl_sombrero2, pl_sombrero3;
+	Port_List pl_cabeza, pl_sombrero, pl_sombrero1, pl_sombrero2, pl_sombrero3, 
+		  pl_cuello, pl_cuerpo;
 	
 	cabeza.izq = 0.825;
 	cabeza.der = 0.825;
 	cabeza.arr = 0.925;
 	cabeza.aba = 0.5;	
 
+	pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(4,pl));
+	opm_print(pl_cuerpo);
+
+	pl_cuello = opm_scale(0.72, 0.72, 0.7, 0.7, opm_set_color(3,pl));
+	opm_print(opm_bcurv5( 10, 0.63, 0.5, 0.5, 0.5, 0.63,
+				  0.61, 0.47,0.4, 0.47,0.61, pl_cuello));
+	
 	pl_cabeza = opm_scale(cabeza.izq, cabeza.der, cabeza.arr, cabeza.aba, opm_set_color(1,pl));
-        opm_print(opm_ellipsis(5, 0.0, 0.5, 0.0, 0.0, pl_cabeza));
+        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.0, pl_cabeza));
 
 	pl_sombrero = opm_scale(0.8, 0.8, 0.955, 0.25, opm_set_color(2,pl));
         opm_print(pl_sombrero);
 	pl_sombrero2 = opm_scale(0.9, 0.25, 0.8, 0.45, opm_set_color(2,pl));
-        opm_print(opm_ellipsis(5, 0.0, 0.5, 0.0, 1.0, pl_sombrero2));
+        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 1.0, pl_sombrero2));
 	pl_sombrero3 = opm_scale(0.25, 0.9, 0.8, 0.45, opm_set_color(2,pl));
-        opm_print(opm_ellipsis(5, 0.0, 0.5, 0.0, -1.0, pl_sombrero3));
+        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, -1.0, pl_sombrero3));
 	pl_sombrero1 = opm_scale(0.77, 0.77, 0.855, 0.25, opm_set_color(3,pl));
         opm_print(pl_sombrero1);
 	
+
+
 
 }
 
@@ -58,10 +68,10 @@ main(){
 /*	    ESTO HACE LO MISMO QUE ARRIBA PERO SIMPLIFICADO	*/
 	
 	Port_List lp1,lp2,lp3,lp4,lp_eli1,lp_eli2;
-	Port_List lp_1=opm_page(Grey65,PeachPuff,Green3,Green4,NULL);
-        Port_List lp_2=opm_page(Red,PeachPuff,Green3,Green4,NULL);
-        Port_List lp_3=opm_page(Green,PeachPuff,Green3,Green4,NULL);
-        Port_List lp_4=opm_page(Blue,PeachPuff,Green3,Green4,NULL);
+	Port_List lp_1=opm_page(Grey65,PeachPuff,Green3,Green4,Orange1,NULL);
+        Port_List lp_2=opm_page(Red,PeachPuff,Green3,Green4,Orange1,NULL);
+        Port_List lp_3=opm_page(Green,PeachPuff,Green3,Green4,Orange1,NULL);
+        Port_List lp_4=opm_page(Blue,PeachPuff,Green3,Green4,Orange1,NULL);
         lp1=opm_scale(1.0,0.5,1.0,0.5,lp_1);
         lp2=opm_scale(0.5,1.0,1.0,0.5,lp_2);
         lp3=opm_scale(1.0,0.5,0.5,1.0,lp_3);
