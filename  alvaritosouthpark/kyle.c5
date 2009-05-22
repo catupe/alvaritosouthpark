@@ -99,9 +99,9 @@ void dibujarKyle(Port_List pl){
        opm_print(opm_sector(10, -3.14159/4,1.00,
 				0.00,0.5,pl_cuerpo2));
 
-       pl_cuello = opm_scale(0.72, 0.72, 0.7, 0.7, opm_set_color(3,pl));
-       opm_print(opm_bcurv5( 10, 0.63, 0.5, 0.5, 0.5, 0.63,
-                                 0.61, 0.47,0.4, 0.47,0.61, pl_cuello));
+       pl_cuello = opm_scale(0.726, 0.726, 0.7, 0.7, opm_set_color(3,pl));
+       opm_print(opm_bcurv5( 10, 0.67, 0.5, 0.5, 0.5, 0.67,
+                                 0.61, 0.47,0.37, 0.47,0.61, pl_cuello));
 
        pl_cabeza = opm_scale(cabeza.izq, cabeza.der, cabeza.arr, cabeza.aba, opm_set_color(1,pl));
        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.0, pl_cabeza));
@@ -154,10 +154,10 @@ main(){
 
 */
 
-       lp_1=opm_page(Grey65,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_2=opm_page(Red,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_3=opm_page(Green,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_4=opm_page(Blue,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp_1=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp_2=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp_3=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp_4=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
        lp1=opm_scale(1.0,0.5,1.0,0.5,lp_1);
        lp2=opm_scale(0.5,1.0,1.0,0.5,lp_2);
        lp3=opm_scale(1.0,0.5,0.5,1.0,lp_3);
