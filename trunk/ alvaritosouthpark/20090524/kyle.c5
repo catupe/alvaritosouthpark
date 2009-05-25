@@ -1,0 +1,204 @@
+#include <stdio.h>
+#include "C5_usrdefs.h"
+#include "C5_defs.h"
+#include "TW_libdefs.h"
+#include "colors.h"
+
+#define ARCHIVO "entrada.txt"
+
+typedef struct Cuadrante {
+       double izq;
+       double der;
+       double arr;
+       double aba;
+} Cuadrante;
+
+typedef struct Kyle {
+       int boca;
+       int manoIzq;
+       int manoDer;
+       int pieIzq;
+       int pieDer;
+} Kyle;
+
+int leerArchivoEntrada(char * archivo,
+                       Kyle * k1,
+                       Kyle * k2,
+                       Kyle * k3,
+                       Kyle * k4){
+	FILE * f;
+	if ((f = fopen(archivo,"r")) != NULL){
+	       fscanf(f,"%d %d %d %d %d\n",&(k1->boca),&(k1->manoIzq),&(k1->manoDer),&(k1->pieIzq),&(k1->pieDer));
+	       fscanf(f,"%d %d %d %d %d\n",&(k2->boca),&(k2->manoIzq),&(k2->manoDer),&(k2->pieIzq),&(k2->pieDer));
+	       fscanf(f,"%d %d %d %d %d\n",&(k3->boca),&(k3->manoIzq),&(k3->manoDer),&(k3->pieIzq),&(k3->pieDer));
+	       fscanf(f,"%d %d %d %d %d\n",&(k4->boca),&(k4->manoIzq),&(k4->manoDer),&(k4->pieIzq),&(k4->pieDer));
+	}
+	else{
+	       return 1;
+	}
+	if( (k1->boca < 1 || k1->boca > 3) ||
+	    (k2->boca < 1 || k2->boca > 3) ||
+	    (k3->boca < 1 || k3->boca > 3) ||
+	    (k4->boca < 1 || k4->boca > 3) ){
+	    return 2;
+	}
+	else{
+	     if ( (k1->manoIzq < 1 || k1->manoIzq > 3) ||
+	          (k2->manoIzq < 1 || k2->manoIzq > 3) ||
+	          (k3->manoIzq < 1 || k3->manoIzq > 3) ||
+	          (k4->manoIzq < 1 || k4->manoIzq > 3) ){
+	           return 3;
+	     }
+	     else{
+		  if ( (k1->manoDer < 1 || k1->manoDer > 3) ||
+		       (k2->manoDer < 1 || k2->manoDer > 3) ||
+		       (k3->manoDer < 1 || k3->manoDer > 3) ||
+		       (k4->manoDer < 1 || k4->manoDer > 3) ){
+		       return 4;
+		   }
+		   else{
+		       if ( (k1->pieIzq < 1 || k1->pieIzq > 3) ||
+		            (k2->pieIzq < 1 || k2->pieIzq > 3) ||
+		            (k3->pieIzq < 1 || k3->pieIzq > 3) ||
+		            (k4->pieIzq < 1 || k4->pieIzq > 3) ){
+		            return 5;
+		       }
+		       else{
+		           if ( (k1->pieDer < 1 || k1->pieDer > 3) ||
+			        (k2->pieDer < 1 || k2->pieDer > 3) ||
+			        (k3->pieDer < 1 || k3->pieDer > 3) ||
+			        (k4->pieDer < 1 || k4->pieDer > 3) ){
+				return 6;
+			   }
+		       }
+                   }
+	    }
+       }
+      return 0;
+}
+
+
+
+void dibujarKyle(Port_List pl){
+       Cuadrante cabeza;
+       Port_List pl_cabeza, pl_sombrero, pl_sombrero1, pl_sombrero2, pl_sombrero3,pl_sombrero4,pl_sombrero5,
+                 pl_cuello1, pl_cuello2, pl_cuerpo, pl_cuerpo1, pl_cuerpo2, pl_cuerpo_print;
+
+Color_Serie cs;
+cs = opm_colors(10, 5, 1.00, 0.00);
+       cabeza.izq = 0.825;
+       cabeza.der = 0.825;
+       cabeza.arr = 0.925;
+       cabeza.aba = 0.5;
+
+pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(4,pl));
+opm_print(opm_image_cons(DT_pair(Color_Serie,cs),pl_cuerpo));
+/*opm_print(pl_cuerpo_print);*/
+
+/*
+       pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(4,pl));
+       opm_print(pl_cuerpo);
+*/
+       pl_cuerpo1 = opm_scale(0.77, 0.28, 0.58, 0.80, opm_set_color(4,pl));
+       opm_print(opm_sector(10, 3.14159/4,0.00,
+                       		0,0.50,pl_cuerpo1));
+       pl_cuerpo2 = opm_scale(0.28, 0.77, 0.58, 0.80, opm_set_color(4,pl));
+       opm_print(opm_sector(10, -3.14159/4,1.00,
+				0.00,0.5,pl_cuerpo2));
+
+pl_cuerpo_print = opm_scale(0.77, 0.77, 0.20, 0.84, opm_set_color(4,pl));
+opm_print(opm_bcurv5( 10, 1, 1, 1, 1, 1,
+  	  		  0.8, 0.50  , 0.00  , 0.50  , 0.8,pl_cuerpo_print));
+
+ /*********/
+
+       pl_cabeza = opm_scale(cabeza.izq, cabeza.der, cabeza.arr, cabeza.aba, opm_set_color(1,pl));
+       opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.0, pl_cabeza));
+
+       pl_sombrero = opm_scale(0.8, 0.8, 0.955, 0.25, opm_set_color(2,pl));
+       opm_print(pl_sombrero);
+       pl_sombrero2 = opm_scale(0.9, 0.25, 0.81, 0.45, opm_set_color(2,pl));
+       opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 1.0, pl_sombrero2));
+       pl_sombrero3 = opm_scale(0.25, 0.9, 0.81, 0.45, opm_set_color(2,pl));
+       opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, -1.0, pl_sombrero3));
+
+/*       pl_sombrero1 = opm_scale(0.7, 0.7, 0.855, 0.27, opm_set_color(3,pl));
+       opm_print(pl_sombrero1);
+*/
+ pl_sombrero1 = opm_scale(0.7, 0.7, 0.855, 0.27, opm_set_color(3,pl));
+ opm_print(opm_bcurv5( 10, 1, 1, 1, 1, 1,
+  	  		   0, 0.15  , 0.25  , 0.15  , 0,pl_sombrero1));
+       pl_sombrero4 = opm_rot(3,opm_scale(0.8, 0.3, 0.855, 0.27, opm_set_color(3,pl)));
+       opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
+		  		 0, 0  , 0  , 0  , 0,pl_sombrero4));
+       pl_sombrero5 = opm_rot(1,opm_scale(0.3, 0.8, 0.855, 0.27, opm_set_color(3,pl)));
+       opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
+		  		 0, 0  , 0  , 0  , 0,pl_sombrero5));
+
+	
+
+      pl_cuello1 = opm_scale(0.726, 0.49, 0.7, 0.7, opm_set_color(3,pl));
+       opm_print(opm_bcurv5( 10, 0.65, 0.58, 0.52, 0.51, 0.50,
+                                 0.60, 0.53,0.47, 0.46,0.45, pl_cuello1));
+
+       pl_cuello2 = opm_scale(0.49, 0.726, 0.7, 0.7, opm_set_color(3,pl));
+       opm_print(opm_bcurv5( 10, 0.50, 0.51, 0.52, 0.58, 0.65,
+                                 0.45, 0.46, 0.47, 0.53, 0.60, pl_cuello2));
+	
+}
+
+
+main(){
+
+
+       Port_List lp1,lp2,lp3,lp4,lp_eli1,lp_eli2,lp_1,lp_2,lp_3,lp_4;
+/*       Kyle k1;
+       Kyle k2;
+       Kyle k3;
+       Kyle k4;
+       int error = 0;
+
+       error = leerArchivoEntrada(ARCHIVO,&k1,&k2,&k3,&k4);
+
+
+       if (error == 1){
+             printf("ERROR %d:: error al leer el archivo de entrada.\n",error);
+             exit(1);
+       }
+       else{
+             if( error > 2){
+             	printf("ERROR %d :: error en los parametros.\n",error);
+                exit(1);
+             }
+       }
+
+*/
+
+      lp_1=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Orange2,
+		     Orange3,Orange4,OrangeRed,OrangeRed1,OrangeRed2,
+		     OrangeRed3,OrangeRed4,Orangered,Black,NULL);
+       lp_2=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp_3=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp_4=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+       lp1=opm_scale(1.0,0.5,1.0,0.5,lp_1);
+       lp2=opm_scale(0.5,1.0,1.0,0.5,lp_2);
+       lp3=opm_scale(1.0,0.5,0.5,1.0,lp_3);
+       lp4=opm_scale(0.5,1.0,0.5,1.0,lp_4);
+
+
+       opm_print(lp1);
+       opm_print(lp2);
+       opm_print(lp3);
+       opm_print(lp4);
+
+
+
+
+       dibujarKyle(lp1);
+       dibujarKyle(lp2);
+       dibujarKyle(lp3);
+       dibujarKyle(lp4);
+
+
+
+ }
