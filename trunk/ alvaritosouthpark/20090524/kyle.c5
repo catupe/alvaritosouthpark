@@ -82,68 +82,76 @@ int leerArchivoEntrada(char * archivo,
 void dibujarKyle(Port_List pl){
        Cuadrante cabeza;
        Port_List pl_cabeza, pl_sombrero, pl_sombrero1, pl_sombrero2, pl_sombrero3,pl_sombrero4,pl_sombrero5,
-                 pl_cuello1, pl_cuello2, pl_cuerpo, pl_cuerpo1, pl_cuerpo2, pl_cuerpo_print;
+                 pl_cuello1, pl_cuello2, pl_cuerpo, pl_cuerpo1, pl_cuerpo2, pl_cuerpo_print, pl_sombrero1_a;
 
-Color_Serie cs;
-cs = opm_colors(10, 5, 1.00, 0.00);
+Color_Serie cs_cuerpo, cs_sombrero;
+cs_cuerpo = opm_colors(2, 20, 1.00, 0.00);
+cs_sombrero = opm_colors(10, 20, 1.00, 0.00);
+
+
        cabeza.izq = 0.825;
        cabeza.der = 0.825;
        cabeza.arr = 0.925;
        cabeza.aba = 0.5;
 
-pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(4,pl));
-opm_print(opm_image_cons(DT_pair(Color_Serie,cs),pl_cuerpo));
+pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(24,pl));
+opm_print(opm_image_cons(DT_pair(Color_Serie,cs_cuerpo),pl_cuerpo));
+
+
 /*opm_print(pl_cuerpo_print);*/
 
 /*
        pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(4,pl));
        opm_print(pl_cuerpo);
 */
-       pl_cuerpo1 = opm_scale(0.77, 0.28, 0.58, 0.80, opm_set_color(4,pl));
+       pl_cuerpo1 = opm_scale(0.77, 0.28, 0.58, 0.80, opm_set_color(24,pl));
        opm_print(opm_sector(10, 3.14159/4,0.00,
                        		0,0.50,pl_cuerpo1));
-       pl_cuerpo2 = opm_scale(0.28, 0.77, 0.58, 0.80, opm_set_color(4,pl));
+       pl_cuerpo2 = opm_scale(0.28, 0.77, 0.58, 0.80, opm_set_color(24,pl));
        opm_print(opm_sector(10, -3.14159/4,1.00,
 				0.00,0.5,pl_cuerpo2));
 
-pl_cuerpo_print = opm_scale(0.77, 0.77, 0.20, 0.84, opm_set_color(4,pl));
+pl_cuerpo_print = opm_scale(0.77, 0.77, 0.20, 0.84, opm_set_color(24,pl));
 opm_print(opm_bcurv5( 10, 1, 1, 1, 1, 1,
   	  		  0.8, 0.50  , 0.00  , 0.50  , 0.8,pl_cuerpo_print));
 
- /*********/
+       pl_cuello1 = opm_scale(0.726, 0.49, 0.7, 0.7, opm_set_color(2,pl));
+       opm_print(opm_bcurv5( 10, 0.65, 0.58, 0.52, 0.51, 0.50,
+                                 0.60, 0.53,0.47, 0.46,0.45, pl_cuello1));
+
+       pl_cuello2 = opm_scale(0.49, 0.726, 0.7, 0.7, opm_set_color(2,pl));
+       opm_print(opm_bcurv5( 10, 0.50, 0.51, 0.52, 0.58, 0.65,
+                                 0.45, 0.46, 0.47, 0.53, 0.60, pl_cuello2));
 
        pl_cabeza = opm_scale(cabeza.izq, cabeza.der, cabeza.arr, cabeza.aba, opm_set_color(1,pl));
        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.0, pl_cabeza));
 
-       pl_sombrero = opm_scale(0.8, 0.8, 0.955, 0.25, opm_set_color(2,pl));
-       opm_print(pl_sombrero);
-       pl_sombrero2 = opm_scale(0.9, 0.25, 0.81, 0.45, opm_set_color(2,pl));
+       pl_sombrero = opm_scale(0.8, 0.8, 0.955, 0.25, opm_set_color(3,pl));
+       opm_print(opm_image_cons(DT_pair(Color_Serie,cs_sombrero),pl_sombrero));
+       pl_sombrero2 = opm_scale(0.9, 0.25, 0.81, 0.45, opm_set_color(3,pl));
        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 1.0, pl_sombrero2));
-       pl_sombrero3 = opm_scale(0.25, 0.9, 0.81, 0.45, opm_set_color(2,pl));
+       pl_sombrero3 = opm_scale(0.25, 0.9, 0.81, 0.45, opm_set_color(3,pl));
        opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, -1.0, pl_sombrero3));
 
 /*       pl_sombrero1 = opm_scale(0.7, 0.7, 0.855, 0.27, opm_set_color(3,pl));
        opm_print(pl_sombrero1);
 */
- pl_sombrero1 = opm_scale(0.7, 0.7, 0.855, 0.27, opm_set_color(3,pl));
- opm_print(opm_bcurv5( 10, 1, 1, 1, 1, 1,
-  	  		   0, 0.15  , 0.25  , 0.15  , 0,pl_sombrero1));
-       pl_sombrero4 = opm_rot(3,opm_scale(0.8, 0.3, 0.855, 0.27, opm_set_color(3,pl)));
+/*opm_image_cons(DT_pair(Color_Serie,cs_cuerpo),pl_sombrero1)*/
+ pl_sombrero1 = opm_scale(0.7, 0.7, 0.855, 0.27, opm_set_color(2,pl));
+ opm_print(opm_bcurv5( 10, 1, 1     , 1     , 1     , 1,
+  	  	   	          0, 0.15  , 0.25  , 0.15  , 0,pl_sombrero1));
+/* opm_print(opm_image_cons(DT_pair(Color_Serie,cs_sombrero),pl_sombrero1));*/
+
+       pl_sombrero4 = opm_rot(3,opm_scale(0.8, 0.3, 0.855, 0.27, opm_set_color(2,pl)));
        opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
 		  		 0, 0  , 0  , 0  , 0,pl_sombrero4));
-       pl_sombrero5 = opm_rot(1,opm_scale(0.3, 0.8, 0.855, 0.27, opm_set_color(3,pl)));
+       pl_sombrero5 = opm_rot(1,opm_scale(0.3, 0.8, 0.855, 0.27, opm_set_color(2,pl)));
        opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
 		  		 0, 0  , 0  , 0  , 0,pl_sombrero5));
 
 	
 
-      pl_cuello1 = opm_scale(0.726, 0.49, 0.7, 0.7, opm_set_color(3,pl));
-       opm_print(opm_bcurv5( 10, 0.65, 0.58, 0.52, 0.51, 0.50,
-                                 0.60, 0.53,0.47, 0.46,0.45, pl_cuello1));
-
-       pl_cuello2 = opm_scale(0.49, 0.726, 0.7, 0.7, opm_set_color(3,pl));
-       opm_print(opm_bcurv5( 10, 0.50, 0.51, 0.52, 0.58, 0.65,
-                                 0.45, 0.46, 0.47, 0.53, 0.60, pl_cuello2));
+      
 	
 }
 
@@ -152,6 +160,8 @@ main(){
 
 
        Port_List lp1,lp2,lp3,lp4,lp_eli1,lp_eli2,lp_1,lp_2,lp_3,lp_4;
+Color c1_cuerpo, c2_cuerpo, c1_sombrero, c2_sombrero;
+Color_Serie cs_cuerpo, cs_sombrero;
 /*       Kyle k1;
        Kyle k2;
        Kyle k3;
@@ -173,13 +183,19 @@ main(){
        }
 
 */
+	
+c1_cuerpo = rgb(255,166,0);
+c2_cuerpo = rgb(227,112,86);
+cs_cuerpo = opm_col2col(c1_cuerpo,c2_cuerpo,20);
+c2_sombrero = rgb(0,132,0);
+c1_sombrero = rgb(0,204,0);
+cs_sombrero = opm_col2col(c1_sombrero,c2_sombrero,20);
 
-      lp_1=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Orange2,
-		     Orange3,Orange4,OrangeRed,OrangeRed1,OrangeRed2,
-		     OrangeRed3,OrangeRed4,Orangered,Black,NULL);
-       lp_2=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_3=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_4=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
+
+       lp_1=opm_page(Grey45,PeachPuff,Green4,Green3,cs_sombrero,cs_cuerpo,Black,NULL);
+       lp_2=opm_page(Grey45,PeachPuff,Green4,Green3,cs_sombrero,cs_cuerpo,Black,NULL);
+       lp_3=opm_page(Grey45,PeachPuff,Green4,Green3,cs_sombrero,cs_cuerpo,Black,NULL);
+       lp_4=opm_page(Grey45,PeachPuff,Green4,Green3,cs_sombrero,cs_cuerpo,Black,NULL);
        lp1=opm_scale(1.0,0.5,1.0,0.5,lp_1);
        lp2=opm_scale(0.5,1.0,1.0,0.5,lp_2);
        lp3=opm_scale(1.0,0.5,0.5,1.0,lp_3);
