@@ -1,5 +1,4 @@
 #include <stdio.h>
-/*#include <stdlib.h>*/
 #include "C5_usrdefs.h"
 #include "C5_defs.h"
 #include "TW_libdefs.h"
@@ -7,12 +6,8 @@
 
 #define ARCHIVO "entrada.txt"
 
-typedef struct Cuadrante {
-       double izq;
-       double der;
-       double arr;
-       double aba;
-} Cuadrante;
+DT_typedef char Arial_Letter_D String[5] {0, 0, 5};
+
 
 typedef struct Kyle {
        int boca;
@@ -21,6 +16,16 @@ typedef struct Kyle {
        int pieIzq;
        int pieDer;
 } Kyle;
+
+Port_List getCuadrante(int i, Port_List pl){
+	switch(i){
+		case 0: return pl; break;
+		case 1:	return(opm_scale(1.0,0.5,1.0,0.5,pl)); break;
+		case 2: return(opm_scale(0.5,1.0,1.0,0.5,pl)); break;
+		case 3: return(opm_scale(1.0,0.5,0.5,1.0,pl)); break;
+		case 4: return(opm_scale(0.5,1.0,0.5,1.0,pl)); break;
+	}
+}
 
 int leerArchivoEntrada(char * archivo,
                        Kyle * k1,
@@ -33,6 +38,7 @@ int leerArchivoEntrada(char * archivo,
 	       fscanf(f,"%d %d %d %d %d\n",&(k2->boca),&(k2->manoIzq),&(k2->manoDer),&(k2->pieIzq),&(k2->pieDer));
 	       fscanf(f,"%d %d %d %d %d\n",&(k3->boca),&(k3->manoIzq),&(k3->manoDer),&(k3->pieIzq),&(k3->pieDer));
 	       fscanf(f,"%d %d %d %d %d\n",&(k4->boca),&(k4->manoIzq),&(k4->manoDer),&(k4->pieIzq),&(k4->pieDer));
+	       fclose(f);
 	}
 	else{
 	       return 1;
@@ -78,105 +84,364 @@ int leerArchivoEntrada(char * archivo,
       return 0;
 }
 
+void dibujarCuerpo(int c){
+	Port_List pl, pl_cuerpo, pl_cuerpo1, pl_cuerpo2, pl_cuerpo3;
+	Color c1_cuerpo, c2_cuerpo, cs12_cuerpo;
+	Color_Serie cs_cuerpo;
+	
+	c1_cuerpo	= rgb(255,102,6);
+	c2_cuerpo	= rgb(227,178,136);
+	cs12_cuerpo	= opm_col2col(c1_cuerpo,c2_cuerpo,20);
+			
+	pl = getCuadrante(c,opm_page(cs12_cuerpo,NULL));
+	cs_cuerpo 	= opm_colors(10, 20, 1.00, 0.00);
+
+	pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, pl);
+	opm_print(opm_image_cons(DT_pair(Color_Serie,cs_cuerpo),pl_cuerpo));
+
+	pl_cuerpo1 = opm_rot(-1,opm_scale(0.77, 0.28, 0.58, 0.80, pl));
+	opm_print(opm_bcurv5( 10, 1, 0.75, 0.7, 0.25, 0,
+		  	           0,   0,   0,   0,   0,pl_cuerpo1));
+	pl_cuerpo2 = opm_rot(-3,opm_scale(0.28, 0.77, 0.58, 0.80, pl));
+	opm_print(opm_bcurv5( 10, 0, 0.25, 0.7, 0.75, 1,
+		  	           0,   0,   0,   0,   0,pl_cuerpo2));
+
+	pl_cuerpo3 = opm_scale(0.77, 0.77, 0.20, 0.84, pl);
+	opm_print(opm_bcurv5( 10, 1, 1, 1, 1, 1,
+		  	       0.8, 0.50  , 0.00  , 0.50  , 0.8,opm_image_cons(DT_pair(Color_Serie,cs_cuerpo),pl_cuerpo3)));
+
+}
 
 
-void dibujarKyle(Port_List pl){
-       Cuadrante cabeza;
-       Port_List pl_cabeza, pl_sombrero, pl_sombrero1, pl_sombrero2, pl_sombrero3,pl_sombrero4,pl_sombrero5,
-                 pl_cuello, pl_cuerpo, pl_cuerpo1, pl_cuerpo2;
+void dibujarCuello(int c){
+ 	Port_List pl, pl_cuello1, pl_cuello2, pl_cuello3, pl_cuello4;
+	
+	pl = getCuadrante(c, opm_page(rgb(66,170,20),NULL));
+	
+	pl_cuello1 = opm_scale(0.726, 0.47, 0.7, 0.7, opm_set_color(0,pl));
+	opm_print(opm_bcurv5( 10, 0.65, 0.58, 0.52, 0.51, 0.50,
+		                 0.60, 0.53,0.47, 0.46,0.45, pl_cuello1));
+	pl_cuello2 = opm_scale(0.47, 0.726, 0.7, 0.7, opm_set_color(0,pl));
+	opm_print(opm_bcurv5( 10, 0.50, 0.51, 0.52, 0.58, 0.65,
+		                 0.45, 0.46, 0.47, 0.53, 0.60, pl_cuello2));
+	pl_cuello3 = opm_rot(1,opm_scale(0.53, 0.49, 0.5, 0.52, opm_set_color(0,pl)));
+	opm_print(opm_bcurv5( 10, 0.75, 0.75, 0.5, 0.5, 0,
+		  		 0, 0  , 0  , 0  , 0,pl_cuello3));
+	pl_cuello4 = opm_rot(2,opm_scale(0.49, 0.53, 0.5, 0.52, opm_set_color(0,pl)));
+	opm_print(opm_bcurv5( 10, 0.75, 0.75, 0.5, 0.5, 0,
+		  		 0, 0  , 0  , 0  , 0,pl_cuello4));
 
-       cabeza.izq = 0.825;
-       cabeza.der = 0.825;
-       cabeza.arr = 0.925;
-       cabeza.aba = 0.5;
+}
 
-       pl_cuerpo = opm_scale(0.72, 0.72, 0.58, 0.80, opm_set_color(4,pl));
-       opm_print(pl_cuerpo);
-       pl_cuerpo1 = opm_scale(0.77, 0.28, 0.58, 0.80, opm_set_color(4,pl));
-       opm_print(opm_sector(10, 3.14159/4,0.00,
-                       		0,0.50,pl_cuerpo1));
-       pl_cuerpo2 = opm_scale(0.28, 0.77, 0.58, 0.80, opm_set_color(4,pl));
-       opm_print(opm_sector(10, -3.14159/4,1.00,
-				0.00,0.5,pl_cuerpo2));
+void dibujarCara(int c){
+	Port_List pl, pl_cabeza, pl_ojos1, pl_ojos2, pl_iris1, pl_iris2;
+	Color c1_cara, c2_cara, cs12_cara;
+	Color_Serie cs_cara;
+	
+	c1_cara		= rgb(255,255,255);		/*    cara claro 	*/
+	c2_cara		= rgb(252,216,180);   		/*    cara oscuro 	*/
+	cs12_cara	= opm_col2col(c2_cara,c1_cara,20);
+	
+	pl = getCuadrante(c, opm_page(White, Black, cs12_cara,NULL));
+	
+	cs_cara		= opm_colors(0, 20, 1.00, 0.00);
 
-       pl_cuello = opm_scale(0.726, 0.726, 0.7, 0.7, opm_set_color(3,pl));
-       opm_print(opm_bcurv5( 10, 0.67, 0.5, 0.5, 0.5, 0.67,
-                                 0.61, 0.47,0.37, 0.47,0.61, pl_cuello));
+	pl_cabeza = opm_scale(0.825, 0.825, 0.925, 0.5, opm_set_color(2,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.0, opm_image_cons(DT_pair(Color_Serie,cs_cara),pl_cabeza)));
 
-       pl_cabeza = opm_scale(cabeza.izq, cabeza.der, cabeza.arr, cabeza.aba, opm_set_color(1,pl));
-       opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.0, pl_cabeza));
+	pl_ojos1 = opm_scale(0.65, 0.51, 0.77, 0.37, opm_set_color(0,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 0.4, pl_ojos1));
+      	pl_ojos2 = opm_scale(0.51, 0.65, 0.77, 0.37, opm_set_color(0,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, -0.4, pl_ojos2));
 
-       pl_sombrero = opm_scale(0.8, 0.8, 0.955, 0.25, opm_set_color(2,pl));
-       opm_print(pl_sombrero);
-       pl_sombrero2 = opm_scale(0.9, 0.25, 0.81, 0.45, opm_set_color(2,pl));
-       opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 1.0, pl_sombrero2));
-       pl_sombrero3 = opm_scale(0.25, 0.9, 0.81, 0.45, opm_set_color(2,pl));
-       opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, -1.0, pl_sombrero3));
-       pl_sombrero1 = opm_scale(0.7, 0.7, 0.855, 0.25, opm_set_color(3,pl));
-       opm_print(pl_sombrero1);
-       pl_sombrero4 = opm_rot(3,opm_scale(0.8, 0.3, 0.855, 0.25, opm_set_color(3,pl)));
-       opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
+	pl_iris1 = opm_scale(0.55, 0.48, 0.72, 0.31, opm_set_color(1,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0, pl_iris1));
+      	pl_iris2 = opm_scale(0.48, 0.55, 0.72, 0.31, opm_set_color(1,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0, pl_iris2));
+	
+	
+
+}
+
+void dibujarSombrero(int c){
+	Port_List pl, pl_sombrero, pl_sombrero1, pl_sombrero2, pl_sombrero3,pl_sombrero4,pl_sombrero5;
+	Color_Serie cs_sombrero, cs_orejera;
+	Color c1_sombrero, c2_sombrero, cs12_sombrero;
+
+	c1_sombrero	= rgb(66,170,20);		/*    verde claro	*/
+	c2_sombrero	= rgb(33,116,26);		/*    verde oscuro 	*/
+	cs12_sombrero	= opm_col2col(c1_sombrero,c2_sombrero,20);
+
+	pl = getCuadrante(c,opm_page(cs12_sombrero,NULL));
+		
+	cs_sombrero 	= opm_colors(10, 20, 1.00, 0.00);
+	cs_orejera 	= opm_colors(0, 20, 1.00, 0.00);
+
+	pl_sombrero = opm_scale(0.8, 0.8, 0.955, 0.25, opm_set_color(0,pl));
+	opm_print(opm_bcurv5( 10, 0.90, 0.95,1, 0.95,  0.90,
+		  		 0, 0  , 0 ,0,  0,opm_image_cons(DT_pair(Color_Serie,cs_sombrero),pl_sombrero)));
+	
+	pl_sombrero2 = opm_scale(0.9, 0.25, 0.81, 0.45, opm_set_color(0,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, 1.0, opm_image_cons(DT_pair(Color_Serie,cs_orejera),pl_sombrero2)));
+	pl_sombrero3 = opm_scale(0.25, 0.9, 0.81, 0.45, opm_set_color(0,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.5, 0.0, -1.0, opm_image_cons(DT_pair(Color_Serie,cs_orejera),pl_sombrero3)));
+
+	pl_sombrero1 = opm_scale(0.74, 0.74, 0.855, 0.27, opm_set_color(19,pl));
+	opm_print(opm_bcurv5( 10, 1, 1     , 1     , 1     , 1,
+	  	   	          0, 0.15  , 0.25  , 0.15  , 0,pl_sombrero1));
+	pl_sombrero4 = opm_rot(3,opm_scale(0.84, 0.26, 0.855, 0.27, opm_set_color(19,pl)));
+	opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
 		  		 0, 0  , 0  , 0  , 0,pl_sombrero4));
-       pl_sombrero5 = opm_rot(1,opm_scale(0.3, 0.8, 0.855, 0.25, opm_set_color(3,pl)));
-       opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
+	pl_sombrero5 = opm_rot(1,opm_scale(0.26, 0.84, 0.855, 0.27, opm_set_color(19,pl)));
+	opm_print(opm_bcurv5( 10, 0, 0.5, 0.5, 0.5, 0,
 		  		 0, 0  , 0  , 0  , 0,pl_sombrero5));
 
+}
+
+void imprimirTexto(int c){
+	Port_List pl, pl_texto1, pl_texto2;	
+	String st1 = "INCO";
+	String st2 = "2009";
 	
+	pl = getCuadrante(c,opm_page(Black,NULL));
+	
+    	pl_texto1 = opm_scale(0.62, 0.62, 0.52, 0.68, pl);
+	opm_print(opm_image_cons(DT_pair(String, st1), pl_texto1));
+	pl_texto2 = opm_scale(0.62, 0.62, 0.38, 0.82, pl);
+	opm_print(opm_image_cons(DT_pair(String, st2), pl_texto2));
+
+}
+
+void dibujarPieIzq(int c, int i){
+	
+	Port_List pl, pl_pierna, pl_pie, pl_pierna_gen, pl_pie1;	
+	Color c1,c2,cs,c1_brown,c2_brown,cs_brown; 
+	Color_Serie cs_pantalon,cs_pie;
+	
+	c1	= rgb(16,158,174);		/*    azul agua claro 	*/
+	c2	= rgb(5,50,55);   		/*    azul agua oscuro 	*/
+	cs	= opm_col2col(c2,c1,20);
+
+	c1_brown	= rgb(86,50,46);		/*    marron oscuro 	*/
+	c2_brown	= rgb(162,93,86);   		/*    marron claro 	*/
+	cs_brown	= opm_col2col(c1_brown,c2_brown,20);
+	pl = getCuadrante(c,opm_page(rgb(255,0,0),cs,rgb(55,32,29),cs_brown,NULL));
+	cs_pantalon	= opm_colors(10, 20, 1.00, 0.00);
+	cs_pie	= opm_colors(0, 20, 1.00, 0.00);
+
+    	pl_pierna = opm_scale(0.71, 0.50, 0.20, 0.90, opm_set_color(1,pl));
+	pl_pierna_gen = opm_bcurv5( 10, 0.84,0.81, 0.78, 0.77, 0.73,
+   				        0, 0  , 0  , 0  , 0,opm_image_cons(DT_pair(Color_Serie, cs_pantalon),pl_pierna));
+
+	switch (i){
+		case 1 :
+			opm_print(pl_pierna_gen);
+		    	pl_pie = opm_scale(0.72, 0.52, 0.16, 0.90, opm_set_color(0,pl));
+			opm_print(opm_bcurv5( 10, 0, 0.7, 0.7, 0.7, 0,
+						  0, 0  , 0  , 0  , 0,pl_pie));
+			break;
+		case 2:
+			opm_print(opm_inters(pl_pierna_gen,opm_sector(10,  -3.14  ,0.00,
+						   3.1415/3.3,0.55, opm_image_cons(DT_pair(Color_Serie, cs_pantalon), pl_pierna))));
+
+		    	pl_pie = opm_scale(0.82, 0.435, 0.16, 0.90, opm_set_color(0,pl));
+			opm_print(opm_bcurv5( 10, 0, 0.7, 0.7, 0.7, 0.42,
+						  0, 0  , 0  , 0  , 0,pl_pie));
+			break;
+		case 3:
+			pl_pie = opm_scale(0.74, 0.465, 0.35, 0.97, opm_set_color(22,pl));
+			opm_print(opm_bcurv5( 10, 0.5,0.6, 0.7, 0.6, 0.5,
+						  0.45, 0.3  , 0  , 0.3  , 0.45,opm_image_cons(DT_pair(Color_Serie, cs_pie),pl_pie)));
+			pl_pie1 = opm_scale(0.74, 0.465, 0.35, 0.97, opm_set_color(21,pl));
+			/*opm_print(opm_bcurv5( 10, 0.50,0.60,0.70,0.6, 0.5,
+						  0.45,0.55,0.65,0.6, 0.5,pl_pie1));*/
+			opm_print(opm_bcurv5( 10, 0.50,0.35,0.05,0.3, 0.45,
+						  0.45,0.30,0.00,0.3, 0.45,pl_pie1));
+			break;
+	}
+
+}
+
+void dibujarPieDer(int c, int i){
+	
+	Port_List pl, pl_pierna, pl_pie, pl_pierna_gen, pl_pie1;	
+	Color c1,c2,cs,c1_brown,c2_brown,cs_brown; 
+	Color_Serie cs_pantalon,cs_pie;
+	
+	c1	= rgb(16,158,174);		/*    azul agua claro 	*/
+	c2	= rgb(5,50,55);   		/*    azul agua oscuro 	*/
+	cs	= opm_col2col(c2,c1,20);
+	c1_brown	= rgb(86,50,46);		/*    marron oscuro 	*/
+	c2_brown	= rgb(162,93,86);   		/*    marron claro 	*/
+	cs_brown	= opm_col2col(c1_brown,c2_brown,20);
+	pl = getCuadrante(c,opm_page(rgb(255,0,0),cs,rgb(55,32,29),cs_brown,NULL));
+	cs_pantalon	= opm_colors(10, 20, 1.00, 0.00);
+	cs_pie	= opm_colors(0, 20, 1.00, 0.00);
+
+    	pl_pierna = opm_scale(0.5, 0.7, 0.20, 0.90, opm_set_color(1,pl));
+	pl_pierna_gen = opm_bcurv5( 10, 0.73,0.77,0.79,0.81,0.84,
+   				        0, 0  , 0  , 0  , 0,opm_image_cons(DT_pair(Color_Serie, cs_pantalon),pl_pierna));
+
+	switch (i){
+		case 1 :
+			opm_print(pl_pierna_gen);
+		      	pl_pie = opm_scale(0.52, 0.72, 0.16, 0.90, opm_set_color(0,pl));
+			opm_print(opm_bcurv5( 10, 0, 0.7, 0.7, 0.7, 0,
+		  		 		  0, 0  , 0  , 0  , 0,pl_pie));
+			break;
+		case 2:
+			opm_print(opm_inters(pl_pierna_gen,
+						       opm_sector(10,  (3.14-3.14/3.3),0.45,
+								     0,1, opm_image_cons(DT_pair(Color_Serie, cs_pantalon), pl_pierna))));
+
+		      	pl_pie = opm_scale(0.435, 0.82, 0.16, 0.90, opm_set_color(0,pl));
+			opm_print(opm_bcurv5( 10, 0.42, 0.7, 0.7, 0.7, 0,
+		  		 		  0, 0  , 0  , 0  , 0,pl_pie));
+			break;
+		case 3:
+			pl_pie = opm_scale(0.465,0.74, 0.35, 0.97, opm_set_color(22,pl));
+			opm_print(opm_bcurv5( 10, 0.5,0.6, 0.7, 0.6, 0.5,
+						  0.45, 0.3  , 0  , 0.3  , 0.45,opm_image_cons(DT_pair(Color_Serie, cs_pie),pl_pie)));
+			pl_pie1 = opm_scale(0.465,0.74, 0.35, 0.97, opm_set_color(21,pl));
+			/*opm_print(opm_bcurv5( 10, 0.50,0.60,0.70,0.6, 0.5,
+						  0.45,0.55,0.65,0.6, 0.5,pl_pie1));*/
+			opm_print(opm_bcurv5( 10, 0.50,0.35,0.05,0.3, 0.45,
+						  0.45,0.30,0.00,0.3, 0.45,pl_pie1));
+
+			break;
+
+	}
+
+}
+
+void dibujarBrazoIzq(int c, int i){
+	
+	Port_List pl, pl_brazo, pl_mano;	
+	Color c1,c2,cs; 
+	Color_Serie cs_brazo;
+	
+	c1	= rgb(16,158,174);		/*    azul agua claro 	*/
+	c2	= rgb(5,50,55);   		/*    azul agua oscuro 	*/
+	cs	= opm_col2col(c2,c1,20);
+	pl = getCuadrante(c,opm_page(rgb(66,170,20),cs,NULL));
+	
+	cs_brazo	= opm_colors(2, 10, 1.00, 0.00);
+
+	switch (i){
+		case 1 :
+			pl_brazo = opm_rot(-1,opm_scale(0.87, 0.28, 0.58, 0.74, opm_set_color(1,pl)));
+			opm_print(opm_bcurv5(10,0.9,0.87,0.65,0.15,0,
+						0.25,0.2,0.1,0.07,0,opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo)));
+		   	pl_mano = opm_scale(0.867, 0.243, 0.31, 0.77, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+
+	}
+
+}
+
+void dibujarBrazoDer(int c, int i){
+	
+	Port_List pl, pl_brazo, pl_mano;	
+	Color c1,c2,cs; 
+	Color_Serie cs_brazo;
+	
+	c1	= rgb(16,158,174);		/*    azul agua claro 	*/
+	c2	= rgb(5,50,55);   		/*    azul agua oscuro 	*/
+	cs	= opm_col2col(c2,c1,20);
+	pl = getCuadrante(c,opm_page(rgb(66,170,20),cs,NULL));
+	
+	cs_brazo	= opm_colors(0, 10, 1.00, 0.00);
+
+	switch (i){
+		case 1 :
+			pl_brazo = opm_rot(1,opm_scale(0.28, 0.87, 0.58, 0.74, opm_set_color(1,pl)));			
+			opm_print(opm_bcurv5(10,0,0.15,0.65,0.87, 0.9,
+						0,0.07,0.1,0.2, 0.25, opm_image_cons(DT_pair(Color_Serie, cs_brazo),pl_brazo)));
+			pl_mano = opm_scale(0.243, 0.867, 0.31, 0.77, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+
+	}
+
+}
+
+void dibujarBoca(int c, int i){
+	
+	Port_List pl, pl_boca;
+	pl = getCuadrante(c,opm_page(Black, NULL));
+	pl_boca = opm_scale(0.58, 0.58, 0.72, 0.57, pl);
+	switch (i){
+		case 1 :
+			opm_print(opm_bcurv4(10,0.54,0.28,0.72,0.46,
+						0.54,0.26,0.68,0.46, pl_boca));
+
+	}
+
+}
 
 
+void dibujarKyle(int i, Kyle * k){
 	
+	
+
+	dibujarCuerpo(i);
+
+	dibujarPieDer(i, k->pieDer);
+
+	dibujarPieIzq(i, k->pieIzq);
+	
+	dibujarCuello(i);	
+
+	dibujarBrazoIzq(i, k->manoIzq);
+
+	dibujarBrazoDer(i, k->manoDer);
+
+	dibujarCara(i);
+
+	dibujarSombrero(i);
+
+	imprimirTexto(i);
+	
+	dibujarBoca(i, k->boca);
+
+
 }
 
 
 main(){
 
 
-       Port_List lp1,lp2,lp3,lp4,lp_eli1,lp_eli2,lp_1,lp_2,lp_3,lp_4;
-/*       Kyle k1;
-       Kyle k2;
-       Kyle k3;
-       Kyle k4;
-       int error = 0;
+    Port_List lp;
+	Kyle k1;
+	Kyle k2;
+	Kyle k3;
+	Kyle k4;
+	int error = 0;
 
-       error = leerArchivoEntrada(ARCHIVO,&k1,&k2,&k3,&k4);
+	error = leerArchivoEntrada(ARCHIVO,&k1,&k2,&k3,&k4);
 
 
-       if (error == 1){
-             printf("ERROR %d:: error al leer el archivo de entrada.\n",error);
-             exit(1);
-       }
-       else{
-             if( error > 2){
-             	printf("ERROR %d :: error en los parametros.\n",error);
-                exit(1);
-             }
-       }
+	if (error == 1){
+	     printf("ERROR %d:: error al leer el archivo de entrada.\n",error);
+	}
+	else{
+	     if( error > 2){
+	     	printf("ERROR %d :: error en los parametros.\n",error);
+	     }
+	     else{
+		   if(error == 0){
 
+				lp = opm_page(Grey45,NULL);
+				opm_print(lp);
+				
+				dibujarKyle(0, &k1);
+/*				dibujarKyle(1, &k1);				dibujarKyle(2, &k2);
+				dibujarKyle(3, &k3);
+				dibujarKyle(4, &k4);
 */
 
-       lp_1=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_2=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_3=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp_4=opm_page(Grey45,PeachPuff,Green3,Green4,Orange1,Black,NULL);
-       lp1=opm_scale(1.0,0.5,1.0,0.5,lp_1);
-       lp2=opm_scale(0.5,1.0,1.0,0.5,lp_2);
-       lp3=opm_scale(1.0,0.5,0.5,1.0,lp_3);
-       lp4=opm_scale(0.5,1.0,0.5,1.0,lp_4);
-
-
-       opm_print(lp1);
-       opm_print(lp2);
-       opm_print(lp3);
-       opm_print(lp4);
-
-
-
-
-       dibujarKyle(lp1);
-       dibujarKyle(lp2);
-       dibujarKyle(lp3);
-       dibujarKyle(lp4);
-
+		   }
+		}
+	}
 
 
  }
