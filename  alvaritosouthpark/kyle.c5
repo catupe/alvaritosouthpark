@@ -316,7 +316,7 @@ void dibujarPieDer(int c, int i){
 
 void dibujarBrazoIzq(int c, int i){
 	
-	Port_List pl, pl_brazo, pl_mano, pl_a;	
+	Port_List pl, pl_brazo, pl_mano, pl_a, pl_dedo;	
 	Color c1,c2,cs; 
 	Color_Serie cs_brazo;
 	
@@ -332,21 +332,18 @@ void dibujarBrazoIzq(int c, int i){
 			pl_brazo = opm_rot(-1,opm_scale(0.87, 0.28, 0.58, 0.74, opm_set_color(1,pl)));
 			opm_print(opm_bcurv5(10,0.9,0.87,0.65,0.15,0,
 						0.25,0.2,0.1,0.07,0,opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo)));
-		   	pl_mano = opm_scale(0.867, 0.243, 0.31, 0.77, pl);
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+/*		   	pl_mano = opm_scale(0.867, 0.243, 0.31, 0.77, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));*/
 			break;
 		case 2 :
 			pl_brazo = opm_rot(-1,opm_scale(0.95, 0.40, 0.56, 0.70, opm_set_color(1,pl)));
-			/*opm_print(pl_brazo);*/
 			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
-			/*opm_print(opm_cat(pl_a,opm_bcurv5(10,0.89,0.9,0.9,0.6,0.4,
-   						             0.65,0.58,0.57,0.27,-0.1,pl_a)));*/
 			opm_print(opm_bcurv5(10,0.89,0.9,0.9,0.6,0.4,
    						             0.65,0.58,0.57,0.27,-0.1,pl_a));
-/*opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo)));*/
-		   	pl_mano = opm_scale(0.92, 0.19, 0.34, 0.74, pl);
+/*		   	pl_mano = opm_scale(0.92, 0.19, 0.34, 0.74, pl);
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
-
+			pl_dedo = opm_scale(0.83,0.22,0.33,0.71,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
 			break;
 	}
 
@@ -354,14 +351,14 @@ void dibujarBrazoIzq(int c, int i){
 
 void dibujarBrazoDer(int c, int i){
 	
-	Port_List pl, pl_brazo, pl_mano;	
+	Port_List pl, pl_brazo, pl_mano, pl_a, pl_dedo;	
 	Color c1,c2,cs; 
 	Color_Serie cs_brazo;
 	
 	c1	= rgb(16,158,174);		/*    azul agua claro 	*/
 	c2	= rgb(5,50,55);   		/*    azul agua oscuro 	*/
 	cs	= opm_col2col(c2,c1,20);
-	pl = getCuadrante(c,opm_page(rgb(66,170,20),cs,NULL));
+	pl = getCuadrante(c,opm_page(rgb(66,170,20),cs,rgb(33,116,26),NULL));
 	
 	cs_brazo	= opm_colors(0, 10, 1.00, 0.00);
 
@@ -370,8 +367,70 @@ void dibujarBrazoDer(int c, int i){
 			pl_brazo = opm_rot(1,opm_scale(0.28, 0.87, 0.58, 0.74, opm_set_color(1,pl)));			
 			opm_print(opm_bcurv5(10,0,0.15,0.65,0.87, 0.9,
 						0,0.07,0.1,0.2, 0.25, opm_image_cons(DT_pair(Color_Serie, cs_brazo),pl_brazo)));
+/*			pl_mano = opm_scale(0.243, 0.867, 0.31, 0.77, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(17,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
+			break;
+		case 2 :
+			pl_brazo = opm_rot(1,opm_scale(0.40,0.95, 0.56, 0.70, opm_set_color(1,pl)));
+			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
+			opm_print(opm_bcurv5(10,0.4,0.6,0.9,0.9,0.89,
+   						-0.1,0.27,0.57,0.58,0.65,pl_a));
+/*		   	pl_mano = opm_scale(0.19,0.92,0.34,0.74,pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
+			break;
+
+	}
+
+}
+
+void dibujarManoIzq(int c, int i){
+	
+	Port_List pl, pl_mano, pl_dedo;	
+
+	pl = getCuadrante(c,opm_page(rgb(66,170,20),NULL));
+	
+	switch (i){
+		case 1 :
+		   	pl_mano = opm_scale(0.867, 0.243, 0.31, 0.77, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.78,0.27,0.31,0.73,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
+			break;
+		case 2 :
+		   	pl_mano = opm_scale(0.92, 0.19, 0.34, 0.74, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.83,0.22,0.33,0.71,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
+			break;
+	}
+
+}
+
+void dibujarManoDer(int c, int i){
+	
+	Port_List pl, pl_mano, pl_dedo;	
+	Color c1,c2,cs; 
+	Color_Serie cs_brazo;
+	
+	pl = getCuadrante(c,opm_page(rgb(66,170,20),Black,NULL));
+	
+	switch (i){
+		case 1 :
 			pl_mano = opm_scale(0.243, 0.867, 0.31, 0.77, pl);
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.27,0.78,0.31,0.73,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
+			break;
+		case 2 :
+		   	pl_mano = opm_scale(0.19,0.92,0.34,0.74,pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
+			break;
 
 	}
 
@@ -401,6 +460,10 @@ void dibujarKyle(int i, Kyle * k){
 	dibujarBrazoDer(i, k->manoDer);
 	
 	dibujarCuerpo(i);
+	
+	dibujarManoIzq(i, k->manoIzq);
+
+	dibujarManoDer(i, k->manoDer);
 
 	dibujarPieDer(i, k->pieDer);
 
