@@ -339,12 +339,21 @@ void dibujarBrazoIzq(int c, int i){
 			pl_brazo = opm_rot(-1,opm_scale(0.95, 0.40, 0.56, 0.70, opm_set_color(1,pl)));
 			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
 			opm_print(opm_bcurv5(10,0.89,0.9,0.9,0.6,0.4,
-   						             0.65,0.58,0.57,0.27,-0.1,pl_a));
+   						0.65,0.58,0.57,0.27,-0.1,pl_a));
+
 /*		   	pl_mano = opm_scale(0.92, 0.19, 0.34, 0.74, pl);
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
 			pl_dedo = opm_scale(0.83,0.22,0.33,0.71,opm_set_color(0,pl));
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
 			break;
+		case 3 :
+			pl_brazo = opm_rot(0,opm_scale(0.95,0.3, 0.60, 0.68, opm_set_color(1,pl)));
+			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
+			opm_print(opm_inters(pl_a,opm_bcurv5(10,0.7,0.6,0.48,0.6,1.0,
+   								0.5,0.3,0.18,0.3,0.7,pl_brazo)));
+
+			break;
+
 	}
 
 }
@@ -382,6 +391,13 @@ void dibujarBrazoDer(int c, int i){
 			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(0,pl));
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
 			break;
+		case 3 :
+			pl_brazo = opm_rot(0,opm_scale(0.3,0.95, 0.60, 0.68, opm_set_color(1,pl)));
+			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
+			opm_print(opm_inters(pl_a,opm_bcurv5(10,1.0,0.6,0.48,0.6,0.7,
+   								0.7,0.3,0.18,0.3,0.5,pl_brazo)));
+
+			break;
 
 	}
 
@@ -404,6 +420,12 @@ void dibujarManoIzq(int c, int i){
 		   	pl_mano = opm_scale(0.92, 0.19, 0.34, 0.74, pl);
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
 			pl_dedo = opm_scale(0.83,0.22,0.33,0.71,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
+			break;
+		case 3 :
+		   	pl_mano = opm_scale(0.99, 0.10, 0.52, 0.55, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.94,0.1,0.53,0.51,opm_set_color(0,pl));
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
 			break;
 	}
@@ -431,7 +453,13 @@ void dibujarManoDer(int c, int i){
 			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(0,pl));
 			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
 			break;
-
+			break;
+		case 3 :
+		   	pl_mano = opm_scale(0.10,0.99, 0.52, 0.55, pl);
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
+			pl_dedo = opm_scale(0.1,0.94,0.53,0.51,opm_set_color(0,pl));
+			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));
+			break;
 	}
 
 }
@@ -445,7 +473,15 @@ void dibujarBoca(int c, int i){
 		case 1 :
 			opm_print(opm_bcurv4(10,0.54,0.28,0.72,0.46,
 						0.54,0.26,0.68,0.46, pl_boca));
-
+			break;
+		case 2 :
+			opm_print(opm_bcurv4(10,0.54,0.38,0.38,0.54,
+						0.54,0.28,0.28,0.54, pl_boca));
+			break;	
+		case 3 :
+			opm_print(opm_bcurv4(10,0.44,0.68,0.68,0.44,
+						0.44,0.58,0.58,0.44, pl_boca));
+			break;
 	}
 
 }
@@ -479,7 +515,7 @@ void dibujarKyle(int i, Kyle * k){
 	
 	dibujarBoca(i, k->boca);
 
-
+	
 }
 
 
@@ -509,11 +545,11 @@ main(){
 				lp = opm_page(Grey45,NULL);
 				opm_print(lp);
 				
-				dibujarKyle(0, &k1);
-/*				dibujarKyle(1, &k1);				dibujarKyle(2, &k2);
+/*				dibujarKyle(0, &k1);*/
+				dibujarKyle(1, &k1);				dibujarKyle(2, &k2);
 				dibujarKyle(3, &k3);
 				dibujarKyle(4, &k4);
-*/
+
 
 		   }
 		}
