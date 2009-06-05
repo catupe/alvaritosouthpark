@@ -6,7 +6,7 @@ import java.awt.*;           // For Graphics, etc.
 import java.awt.geom.*;      // For Ellipse2D, etc.
 import java.awt.geom.Ellipse2D.Double;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.Math; 
 import java.util.StringTokenizer;
 
@@ -16,10 +16,6 @@ import java.util.StringTokenizer;
 public class EjemploSimple extends JPanel {
 
 	////////////////////////PARTES CABEZA
-	private Ellipse2D.Double cabeza = new Ellipse2D.Double(10,10,200,150);
-	private Ellipse2D.Double ojo = new Ellipse2D.Double(10,10,70,50);
-	private Ellipse2D.Double punto_ojo = new Ellipse2D.Double(95,90,10,10);
-	private Ellipse2D.Double punto_ojo2 = new Ellipse2D.Double(120,90,10,10);
 
 	private CubicCurve2D.Double curva1 = new CubicCurve2D.Double(20, 0, 5, 70, 1, 110, 0, 160);
 	private CubicCurve2D.Double curva2 = new CubicCurve2D.Double(20, 0, 35, 70, 39, 110, 40, 160);
@@ -31,6 +27,35 @@ public class EjemploSimple extends JPanel {
 	private int delta_red;
 	private int delta_green;
 	private int delta_blue;
+	
+	private String test;
+	
+	
+	/////////////configuracion////
+	private int pic1_brazo_der;
+	private int pic1_brazo_izq;
+	private int pic1_pierna_der;
+	private int pic1_pierna_izq;
+	private int pic1_boca;
+	
+	private int pic2_brazo_der;
+	private int pic2_brazo_izq;
+	private int pic2_pierna_der;
+	private int pic2_pierna_izq;
+	private int pic2_boca;
+	
+	private int pic3_brazo_der;
+	private int pic3_brazo_izq;
+	private int pic3_pierna_der;
+	private int pic3_pierna_izq;
+	private int pic3_boca;
+	
+	private int pic4_brazo_der;
+	private int pic4_brazo_izq;
+	private int pic4_pierna_der;
+	private int pic4_pierna_izq;
+	private int pic4_boca;
+	//////////////////////////////
 
 	private void drawGrid(Graphics2D g)
 	{
@@ -94,6 +119,30 @@ public class EjemploSimple extends JPanel {
 		g2d.translate(delta_x, delta_y);
 		g2d.rotate(rot_arrelgo);
 		g2d.fill(this.arreglo_derecho);
+		
+		double dAncho = 0.7;
+		double ancho = 40;
+		double alto = 100;
+		
+		float red = new Float(66.0);
+		float green = new Float(177.0);
+		float blue = new Float(20.0);
+		//46 133 20
+		float dred = -0.4f;
+		float dgreen = -0.88f;
+		float dblue = 0f;
+		
+		for (int i= 50; i > 0; i--)
+		{
+			g2d.setPaint(new Color((int)red, (int)green, (int)blue));
+			g2d.fill(new Ellipse2D.Double(10 + (40.0-ancho)/2, 10+(100-alto)/2, ancho, alto));
+			ancho = ancho - dAncho;
+			alto = ancho/0.4;
+			red += dred;
+			blue += dblue;
+			green += dgreen;
+		}
+		
 		g2d.rotate(-rot_arrelgo);
 		g2d.translate(-delta_x, -delta_y);
 
@@ -107,6 +156,24 @@ public class EjemploSimple extends JPanel {
 		gradient.getPoint1().setLocation(0, 0);
 		g2d.rotate(rot_arrelgo);
 		g2d.fill(this.arreglo_derecho);
+		
+		dAncho = 0.7;
+		ancho = 40;
+		alto = 100;
+		
+		red = new Float(66.0);
+		green = new Float(177.0);
+		blue = new Float(20.0);
+		for (int i= 50; i > 0; i--)
+		{
+			g2d.setPaint(new Color((int)red, (int)green, (int)blue));
+			g2d.fill(new Ellipse2D.Double(10 + (40.0-ancho)/2, 10+(100-alto)/2, ancho, alto));
+			ancho = ancho - dAncho;
+			alto = ancho/0.4;
+			red += dred;
+			blue += dblue;
+			green += dgreen;
+		}
 		g2d.rotate(-rot_arrelgo);
 		g2d.translate(-delta_x, -delta_y);
 
@@ -129,11 +196,16 @@ public class EjemploSimple extends JPanel {
 		g2d.translate(-delta_x, -delta_y);
 
 	}
+	
+	private Ellipse2D.Double cabeza = new Ellipse2D.Double(10,10,200,150);
+	private Ellipse2D.Double ojo = new Ellipse2D.Double(10,10,70,50);
+	private Ellipse2D.Double punto_ojo = new Ellipse2D.Double(95,90,10,10);
+	private Ellipse2D.Double punto_ojo2 = new Ellipse2D.Double(120,90,10,10);
 
 	private void drawCabeza(Graphics2D g2d)
 	{
 		//dibujar cabeza
-		g2d.setPaint(new Color(252,229,188));
+		g2d.setPaint(new Color(235,217,181));
 
 		double delta_x = 0.0;
 		double delta_y = 35.0;
@@ -141,6 +213,31 @@ public class EjemploSimple extends JPanel {
 
 		g2d.translate(delta_x, delta_y);
 		g2d.fill(cabeza);
+		
+		
+		double dAncho = 10;
+		double ancho = 200;
+		double alto = 150;
+		
+		float red = new Float(235.0);
+		float green = new Float(217.0);
+		float blue = new Float(181.0);
+		//253 245 225
+		float dred = 0.36f;
+		float dgreen = 0.56f;
+		float dblue = 0.88f;
+		
+		for (int i= 50; i > 0; i--)
+		{
+			g2d.setPaint(new Color((int)red, (int)green, (int)blue));
+			g2d.fill(new Ellipse2D.Double(10 + (200.0-ancho)/2, 10+(150-alto)/2, ancho, alto));
+			ancho = ancho - dAncho;
+			alto = ancho/1.3333333333;
+			red += dred;
+			blue += dblue;
+			green += dgreen;
+		}
+		
 		g2d.translate(-delta_x, -delta_y);
 
 		delta_x = 135.0;
@@ -181,10 +278,10 @@ public class EjemploSimple extends JPanel {
 	private CubicCurve2D.Double cuerpo_abajo = new CubicCurve2D.Double(80,30,90,40,250,40,260,30);
 	
 	private GradientPaint gradient_cuerpo =
-		new GradientPaint(160, 10, new Color(255, 104, 1), 230, 10, new Color(255,149,79),
+		new GradientPaint(160, 10, new Color(255,102,5), 230, 10, new Color(238, 179, 120),
 				true); // true means to repeat pattern
 	private GradientPaint gradient_cuerpo2 =
-		new GradientPaint(100, 0, new Color(255, 104, 1), 170, 0, new Color(255,149,79),
+		new GradientPaint(100, 0, new Color(255, 102, 4), 170, 0, new Color(238,179,120),
 				true); // true means to repeat pattern
 	
 	private void drawCuerpo(Graphics2D g2d)
@@ -435,7 +532,7 @@ public class EjemploSimple extends JPanel {
 		double delta_x = 17.0;
 		double delta_y = 180.0;
 		
-		g2d.setPaint(Color.black);
+		g2d.setPaint(new Color(5,51,56));
 		
 		GeneralPath newshape = new GeneralPath();
 	    newshape.moveTo(17,0);
@@ -463,7 +560,7 @@ public class EjemploSimple extends JPanel {
 		double delta_x = 20.0;
 		double delta_y = 172.0;
 		
-		g2d.setPaint(Color.black);
+		g2d.setPaint(new Color(5,51,56));
 		
 		GeneralPath newshape = new GeneralPath();
 	    newshape.moveTo(4,10);
@@ -491,7 +588,7 @@ public class EjemploSimple extends JPanel {
 		double delta_x = 20.0;
 		double delta_y = 172.0;
 		
-		g2d.setPaint(Color.black);
+		g2d.setPaint(new Color(5,51,56));
 		
 		GeneralPath newshape = new GeneralPath();
 	    newshape.moveTo(4,10);
@@ -519,7 +616,7 @@ public class EjemploSimple extends JPanel {
 		double delta_x = 157.0;
 		double delta_y = 180.0;
 		
-		g2d.setPaint(Color.black);
+		g2d.setPaint(new Color(5,51,56));
 		
 		GeneralPath newshape = new GeneralPath();
 	    newshape.moveTo(29,0);
@@ -547,7 +644,7 @@ public class EjemploSimple extends JPanel {
 		double delta_x = 160.0;
 		double delta_y = 172.0;
 		
-		g2d.setPaint(Color.black);
+		g2d.setPaint(new Color(5,51,56));
 		
 		GeneralPath newshape = new GeneralPath();
 	    newshape.moveTo(36,10);
@@ -575,7 +672,7 @@ public class EjemploSimple extends JPanel {
 		double delta_x = 160.0;
 		double delta_y = 172.0;
 		
-		g2d.setPaint(Color.black);
+		g2d.setPaint(new Color(5,51,56));
 		
 		GeneralPath newshape = new GeneralPath();
 	    newshape.moveTo(36,10);
@@ -619,12 +716,13 @@ public class EjemploSimple extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		
-		cargarDatosArchivo("test.txt");
+
+		cargarDatosArchivo("entrada.txt");
 		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
 
-		drawGrid(g2d);
+		//drawGrid(g2d);
 
 		//g2d.scale(0.5, 0.5);
 		//g2d.scale(1.5, 1.5);
@@ -632,7 +730,7 @@ public class EjemploSimple extends JPanel {
 		g2d.translate(100.0, 100.0);
 
 		drawPantalon_derecho_set2(g2d);
-		drawPantalon_izquierdo_set2(g2d);
+		drawPantalon_izquierdo_set1(g2d);
 		drawCuerpo(g2d);
 		drawCabeza(g2d);
 		drawGorro(g2d);
@@ -640,40 +738,89 @@ public class EjemploSimple extends JPanel {
 		//drawBrazoDerecho_set1(g2d);
 		//drawBrazoDerecho_set2(g2d);
 		drawBrazoDerecho_set3(g2d);
-		drawBrazoIzquierdo_set3(g2d);
+		drawBrazoIzquierdo_set1(g2d);
 		
 		drawBoca(g2d, 1);
 	}
 	
-	public static void cargarDatosArchivo(String name)
+	public void cargarDatosArchivo(String name)
 	{
 		try {
-			FileReader fr = new FileReader(name);
+			FileReader fr = new FileReader("entrada.txt");
+			
 			BufferedReader entrada = new BufferedReader(fr);
 			String s;
-			int cuentaLineas=0;
+			int linea = 0;
 			while((s = entrada.readLine()) != null){
 				StringTokenizer t;
-				if (cuentaLineas == 6)
-					t = new StringTokenizer(s, "\"");
-				else
-					t = new StringTokenizer(s, " ");
+				
+				t = new StringTokenizer(s, " ");
+				
 				String campo;
-				int cuentaCampos=0;
+				
 				while(t.hasMoreTokens()){
-					campo=t.nextToken();
-					System.out.println(campo);
-					cuentaCampos++;
+					if (linea == 0) {
+						campo=t.nextToken();
+						pic1_brazo_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic1_brazo_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic1_pierna_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic1_pierna_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic1_boca = Integer.parseInt(campo);
+					}
+					else if (linea == 1)
+					{
+						campo=t.nextToken();
+						pic2_brazo_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic2_brazo_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic2_pierna_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic2_pierna_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic2_boca = Integer.parseInt(campo);
+					}
+					else if (linea == 2)
+					{
+						campo=t.nextToken();
+						pic3_brazo_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic3_brazo_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic3_pierna_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic3_pierna_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic3_boca = Integer.parseInt(campo);
+					}
+					else if (linea == 3)
+					{
+						campo=t.nextToken();
+						pic4_brazo_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic4_brazo_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic4_pierna_der = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic4_pierna_izq = Integer.parseInt(campo);
+						campo=t.nextToken();
+						pic4_boca = Integer.parseInt(campo);
+					}
 				}
-				cuentaLineas++;
-
+				linea++;
+				if (linea == 4)
+					return;
 			}
 		}
 		catch(java.io.FileNotFoundException fnfex) {
-			System.out.println("se presento el error: "+fnfex.toString());
+			test = fnfex.toString();
 		}
 		catch(java.io.IOException fnfex) {
-			System.out.println("se presento el error: "+fnfex.toString());
+			test = fnfex.toString();
 		}
 	}
 
