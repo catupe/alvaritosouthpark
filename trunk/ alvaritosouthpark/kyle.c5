@@ -134,7 +134,7 @@ void dibujarCuello(int c){
 }
 
 void dibujarCara(int c){
-	Port_List pl, pl_cabeza, pl_ojos1, pl_ojos2, pl_iris1, pl_iris2;
+	Port_List pl, pl_cabeza, pl_ojos1, pl_ojos2, pl_iris1, pl_iris2, pl_nariz, pl_nariz1,pl_nariz2, pl_naso1, pl_naso2;
 	Color c1_cara, c2_cara, cs12_cara;
 	Color_Serie cs_cara;
 	
@@ -159,8 +159,19 @@ void dibujarCara(int c){
       	pl_iris2 = opm_scale(0.48, 0.55, 0.72, 0.31, opm_set_color(1,pl));
 	opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0, pl_iris2));
 	
-	
-
+	pl_nariz = opm_scale(0.53, 0.53, 0.64, 0.38, opm_set_color(1,pl));
+	opm_print(opm_bcurv5( 10, -0.1, 0.55, 0.60, 0.55, 0.1,
+		  		  -0.2, 0.45, 0.50, 0.45, 0.0,pl_nariz));
+	pl_nariz1 = opm_scale(0.53, 0.49, 0.62, 0.40, opm_set_color(1,pl));
+	opm_print(opm_bcurv4( 10, 1.0, 0.60, 0.40, 0.0,
+		  		  0.9, 0.50, 0.40, 0.0,pl_nariz1));
+	pl_nariz2 = opm_scale(0.49,0.53, 0.62, 0.40, opm_set_color(1,pl));
+	opm_print(opm_bcurv4( 10, 0,0.4,0.55,1.0,
+		  		  0,0.4,0.45,0.9,pl_nariz2));
+	pl_naso1 = opm_scale(0.515,0.495, 0.62, 0.39, opm_set_color(1,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0.0, pl_naso1));
+	pl_naso2 = opm_scale(0.495,0.515, 0.62, 0.39, opm_set_color(1,pl));
+	opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0.0, pl_naso2));
 }
 
 void dibujarSombrero(int c){
@@ -205,14 +216,14 @@ void imprimirTexto(int c){
 	
 	pl = getCuadrante(c,opm_page(Black,NULL));
 	
-    	pl_texto1 = opm_scale(0.62, 0.62, 0.52, 0.68, pl);
+    	pl_texto1 = opm_scale(0.62, 0.62, 0.44, 0.66, pl);
 	opm_print(opm_image_cons(DT_pair(String, st1), pl_texto1));
-	pl_texto2 = opm_scale(0.62, 0.62, 0.38, 0.82, pl);
+	pl_texto2 = opm_scale(0.62, 0.62, 0.36, 0.74, pl);
 	opm_print(opm_image_cons(DT_pair(String, st2), pl_texto2));
 
 }
 
-void dibujarPieIzq(int c, int i){
+void dibujarPieDer(int c, int i){
 	
 	Port_List pl, pl_pierna, pl_pie, pl_pierna_gen, pl_pie1;	
 	Color c1,c2,cs,c1_brown,c2_brown,cs_brown; 
@@ -253,8 +264,6 @@ void dibujarPieIzq(int c, int i){
 			opm_print(opm_bcurv5( 10, 0.5,0.6, 0.7, 0.6, 0.5,
 						  0.45, 0.3  , 0  , 0.3  , 0.45,opm_image_cons(DT_pair(Color_Serie, cs_pie),pl_pie)));
 			pl_pie1 = opm_scale(0.74, 0.465, 0.35, 0.97, opm_set_color(21,pl));
-			/*opm_print(opm_bcurv5( 10, 0.50,0.60,0.70,0.6, 0.5,
-						  0.45,0.55,0.65,0.6, 0.5,pl_pie1));*/
 			opm_print(opm_bcurv5( 10, 0.50,0.35,0.05,0.3, 0.45,
 						  0.45,0.30,0.00,0.3, 0.45,pl_pie1));
 			break;
@@ -262,7 +271,7 @@ void dibujarPieIzq(int c, int i){
 
 }
 
-void dibujarPieDer(int c, int i){
+void dibujarPieIzq(int c, int i){
 	
 	Port_List pl, pl_pierna, pl_pie, pl_pierna_gen, pl_pie1;	
 	Color c1,c2,cs,c1_brown,c2_brown,cs_brown; 
@@ -303,8 +312,6 @@ void dibujarPieDer(int c, int i){
 			opm_print(opm_bcurv5( 10, 0.5,0.6, 0.7, 0.6, 0.5,
 						  0.45, 0.3  , 0  , 0.3  , 0.45,opm_image_cons(DT_pair(Color_Serie, cs_pie),pl_pie)));
 			pl_pie1 = opm_scale(0.465,0.74, 0.35, 0.97, opm_set_color(21,pl));
-			/*opm_print(opm_bcurv5( 10, 0.50,0.60,0.70,0.6, 0.5,
-						  0.45,0.55,0.65,0.6, 0.5,pl_pie1));*/
 			opm_print(opm_bcurv5( 10, 0.50,0.35,0.05,0.3, 0.45,
 						  0.45,0.30,0.00,0.3, 0.45,pl_pie1));
 
@@ -314,7 +321,7 @@ void dibujarPieDer(int c, int i){
 
 }
 
-void dibujarBrazoIzq(int c, int i){
+void dibujarBrazoDer(int c, int i){
 	
 	Port_List pl, pl_brazo, pl_mano, pl_a, pl_dedo;	
 	Color c1,c2,cs; 
@@ -332,19 +339,12 @@ void dibujarBrazoIzq(int c, int i){
 			pl_brazo = opm_rot(-1,opm_scale(0.87, 0.28, 0.58, 0.74, opm_set_color(1,pl)));
 			opm_print(opm_bcurv5(10,0.9,0.87,0.65,0.15,0,
 						0.25,0.2,0.1,0.07,0,opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo)));
-/*		   	pl_mano = opm_scale(0.867, 0.243, 0.31, 0.77, pl);
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));*/
 			break;
 		case 2 :
 			pl_brazo = opm_rot(-1,opm_scale(0.95, 0.40, 0.56, 0.70, opm_set_color(1,pl)));
 			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
 			opm_print(opm_bcurv5(10,0.89,0.9,0.9,0.6,0.4,
    						0.65,0.58,0.57,0.27,-0.1,pl_a));
-
-/*		   	pl_mano = opm_scale(0.92, 0.19, 0.34, 0.74, pl);
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
-			pl_dedo = opm_scale(0.83,0.22,0.33,0.71,opm_set_color(0,pl));
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
 			break;
 		case 3 :
 			pl_brazo = opm_rot(0,opm_scale(0.95,0.3, 0.60, 0.68, opm_set_color(1,pl)));
@@ -358,7 +358,7 @@ void dibujarBrazoIzq(int c, int i){
 
 }
 
-void dibujarBrazoDer(int c, int i){
+void dibujarBrazoIzq(int c, int i){
 	
 	Port_List pl, pl_brazo, pl_mano, pl_a, pl_dedo;	
 	Color c1,c2,cs; 
@@ -376,20 +376,12 @@ void dibujarBrazoDer(int c, int i){
 			pl_brazo = opm_rot(1,opm_scale(0.28, 0.87, 0.58, 0.74, opm_set_color(1,pl)));			
 			opm_print(opm_bcurv5(10,0,0.15,0.65,0.87, 0.9,
 						0,0.07,0.1,0.2, 0.25, opm_image_cons(DT_pair(Color_Serie, cs_brazo),pl_brazo)));
-/*			pl_mano = opm_scale(0.243, 0.867, 0.31, 0.77, pl);
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
-			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(17,pl));
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
 			break;
 		case 2 :
 			pl_brazo = opm_rot(1,opm_scale(0.40,0.95, 0.56, 0.70, opm_set_color(1,pl)));
 			pl_a = opm_image_cons(DT_pair(Color_Serie,cs_brazo),pl_brazo);
 			opm_print(opm_bcurv5(10,0.4,0.6,0.9,0.9,0.89,
    						-0.1,0.27,0.57,0.58,0.65,pl_a));
-/*		   	pl_mano = opm_scale(0.19,0.92,0.34,0.74,pl);
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_mano));
-			pl_dedo = opm_scale(0.22,0.83,0.33,0.71,opm_set_color(0,pl));
-			opm_print(opm_ellipsis(7, 0.0, 0.0, 0.0, 0,pl_dedo));*/
 			break;
 		case 3 :
 			pl_brazo = opm_rot(0,opm_scale(0.3,0.95, 0.60, 0.68, opm_set_color(1,pl)));
@@ -403,7 +395,7 @@ void dibujarBrazoDer(int c, int i){
 
 }
 
-void dibujarManoIzq(int c, int i){
+void dibujarManoDer(int c, int i){
 	
 	Port_List pl, pl_mano, pl_dedo;	
 
@@ -432,7 +424,7 @@ void dibujarManoIzq(int c, int i){
 
 }
 
-void dibujarManoDer(int c, int i){
+void dibujarManoIzq(int c, int i){
 	
 	Port_List pl, pl_mano, pl_dedo;	
 	Color c1,c2,cs; 
@@ -468,7 +460,7 @@ void dibujarBoca(int c, int i){
 	
 	Port_List pl, pl_boca;
 	pl = getCuadrante(c,opm_page(Black, NULL));
-	pl_boca = opm_scale(0.58, 0.58, 0.72, 0.57, pl);
+	pl_boca = opm_scale(0.58, 0.58, 0.70, 0.59, pl);
 	switch (i){
 		case 1 :
 			opm_print(opm_bcurv4(10,0.54,0.28,0.72,0.46,
